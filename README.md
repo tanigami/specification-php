@@ -8,7 +8,7 @@ Basic classes for [Specification pattern](https://en.wikipedia.org/wiki/Specific
 
 This package is based on the implementation in [carlosbuenosvinos/ddd](https://github.com/dddinphp/ddd).
 
-# Installation
+## Installation
 
 ```
 $ composer require tanigami/specification
