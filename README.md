@@ -70,6 +70,5 @@ $cancelled = new CancelledOrderSpecification;
 
 
 $paid->and($unshipped)->isSatisfiedBy(new Order); // => true
-(new OneOfSpecification($paid, $unshipped, $cancelled))-.isSatisfiedBy(new Order); // => true
-
+(new OneOfSpecification($paid, $unshipped, $cancelled))->isSatisfiedBy(new Order); // => true
 ```
