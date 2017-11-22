@@ -2,7 +2,7 @@
 
 namespace Tanigami\Specification;
 
-class AnyOfSpecification
+class AnyOfSpecification extends Specification
 {
     /**
      * @var Specification[]
