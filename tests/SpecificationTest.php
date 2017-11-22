@@ -44,6 +44,30 @@ class SpecificationTest extends TestCase
         $this->assertTrue($trueOrTrueSpec->isSatisfiedBy(new stdClass));
         $this->assertTrue($trueOrFalseSpec->isSatisfiedBy(new stdClass));
     }
+
+    public function testAnyOfSpecification()
+    {
+        $trueSpec  = new FakeSpecification(true);
+        $falseSpec = new FakeSpecification(false);
+        $this->assertTrue((new AnyOfSpecification($trueSpec, $trueSpec, $trueSpec))->isSatisfiedBy(new stdClass));
+        $this->assertFalse((new AnyOfSpecification($trueSpec, $trueSpec, $falseSpec))->isSatisfiedBy(new stdClass));
+    }
+
+    public function testOneOfSpecification()
+    {
+        $trueSpec  = new FakeSpecification(true);
+        $falseSpec = new FakeSpecification(false);
+        $this->assertFalse((new OneOfSpecification($falseSpec, $falseSpec, $falseSpec))->isSatisfiedBy(new stdClass));
+        $this->assertTrue((new OneOfSpecification($falseSpec, $falseSpec, $trueSpec))->isSatisfiedBy(new stdClass));
+    }
+
+    public function testNoneOfSpecification()
+    {
+        $trueSpec  = new FakeSpecification(true);
+        $falseSpec = new FakeSpecification(false);
+        $this->assertTrue((new NoneOfSpecification($falseSpec, $falseSpec, $falseSpec))->isSatisfiedBy(new stdClass));
+        $this->assertFalse((new NoneOfSpecification($falseSpec, $falseSpec, $trueSpec))->isSatisfiedBy(new stdClass));
+    }
 }
 
 class FakeSpecification extends Specification
