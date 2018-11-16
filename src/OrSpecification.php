@@ -7,12 +7,12 @@ class OrSpecification extends Specification
     /**
      * @var Specification
      */
-    private $one;
+    public $one;
 
     /**
      * @var Specification
      */
-    private $other;
+    public $other;
 
     /**
      * @param Specification $one
