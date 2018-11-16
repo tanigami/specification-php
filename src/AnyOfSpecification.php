@@ -2,6 +2,8 @@
 
 namespace Tanigami\Specification;
 
+use Doctrine\Common\Collections\Criteria;
+
 class AnyOfSpecification extends Specification
 {
     /**
@@ -29,6 +31,24 @@ class AnyOfSpecification extends Specification
         }
 
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function criteria(): Criteria
+    {
+        /** @var Criteria $criteria */
+        $criteria = null;
+        foreach ($this->specifications as $specification) {
+            if (is_null($criteria)) {
+                $criteria = $specification->criteria();
+            } else {
+                $criteria = $criteria->andWhere($specification->criteria()->getWhereExpression());
+            }
+        }
+
+        return $criteria;
     }
 
     /**

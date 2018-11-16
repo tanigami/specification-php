@@ -2,6 +2,8 @@
 
 namespace Tanigami\Specification;
 
+use Doctrine\Common\Collections\Criteria;
+
 class OneOfSpecification extends Specification
 {
     /**
@@ -15,6 +17,24 @@ class OneOfSpecification extends Specification
     public function __construct(Specification ...$specifications)
     {
         $this->specifications = $specifications;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function criteria(): Criteria
+    {
+        /** @var Criteria $criteria */
+        $criteria = null;
+        foreach ($this->specifications as $specification) {
+            if (is_null($criteria)) {
+                $criteria = $specification->criteria();
+            } else {
+                $criteria = $criteria->orWhere($specification->criteria()->getWhereExpression());
+            }
+        }
+
+        return $criteria;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Tanigami\Specification;
 
+use Doctrine\Common\Collections\Criteria;
+
 class AndSpecification extends Specification
 {
     /**
@@ -30,6 +32,14 @@ class AndSpecification extends Specification
     public function isSatisfiedBy($object): bool
     {
         return $this->one->isSatisfiedBy($object) && $this->other->isSatisfiedBy($object);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function criteria(): Criteria
+    {
+        return $this->one->criteria()->andWhere($this->other->criteria()->getWhereExpression());
     }
 
     /**
