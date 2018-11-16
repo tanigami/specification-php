@@ -7,7 +7,7 @@ class AnyOfSpecification extends Specification
     /**
      * @var Specification[]
      */
-    public $specifications;
+    private $specifications;
 
     /**
      * @param Specification[] ...$specifications

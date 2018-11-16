@@ -7,7 +7,7 @@ class NotSpecification extends Specification
     /**
      * @var Specification
      */
-    public $specification;
+    private $specification;
 
     /**
      * @param Specification $specification

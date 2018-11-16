@@ -7,7 +7,7 @@ class NoneOfSpecification extends Specification
     /**
      * @var Specification[]
      */
-    public $specifications;
+    private $specifications;
 
     /**
      * @param Specification[] ...$specifications
