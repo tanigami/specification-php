@@ -30,4 +30,12 @@ class NoneOfSpecification extends Specification
 
         return true;
     }
+
+    /**
+     * @return Specification[]
+     */
+    public function specifications(): array
+    {
+        return $this->specifications();
+    }
 }

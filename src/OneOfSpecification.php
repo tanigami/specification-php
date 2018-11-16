@@ -30,4 +30,12 @@ class OneOfSpecification extends Specification
 
         return false;
     }
+
+    /**
+     * @return Specification[]
+     */
+    public function specifications(): array
+    {
+        return $this->specifications;
+    }
 }

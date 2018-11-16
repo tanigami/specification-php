@@ -25,4 +25,12 @@ class NotSpecification extends Specification
     {
         return !$this->specification->isSatisfiedBy($object);
     }
+
+    /**
+     * @return Specification
+     */
+    public function specification(): Specification
+    {
+        return $this->specification;
+    }
 }

@@ -31,4 +31,20 @@ class OrSpecification extends Specification
     {
         return $this->one->isSatisfiedBy($object) || $this->other->isSatisfiedBy($object);
     }
+
+    /**
+     * @return Specification
+     */
+    public function one(): Specification
+    {
+        return $this->one;
+    }
+
+    /**
+     * @return Specification
+     */
+    public function other(): Specification
+    {
+        return $this->other;
+    }
 }
