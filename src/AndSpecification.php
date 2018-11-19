@@ -2,8 +2,6 @@
 
 namespace Tanigami\Specification;
 
-use Doctrine\Common\Collections\Criteria;
-
 class AndSpecification extends Specification
 {
     /**
@@ -37,9 +35,15 @@ class AndSpecification extends Specification
     /**
      * {@inheritdoc}
      */
-    public function criteria(): Criteria
+    public function whereExpression(string $alias): string
     {
-        return $this->one->criteria()->andWhere($this->other->criteria()->getWhereExpression());
+        return sprintf(
+            sprintf(
+                '(%s) AND (%s)',
+                $this->one()->whereExpression($alias),
+                $this->other()->whereExpression($alias)
+            )
+        );
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Tanigami\Specification;
 
-use Doctrine\Common\Collections\Criteria;
-
 class OrSpecification extends Specification
 {
     /**
@@ -37,9 +35,15 @@ class OrSpecification extends Specification
     /**
      * {@inheritdoc}
      */
-    public function criteria(): Criteria
+    public function whereExpression(string $alias): string
     {
-        return $this->one->criteria()->orWhere($this->other->criteria()->getWhereExpression());
+        return sprintf(
+            sprintf(
+                '(%s) OR (%s)',
+                $this->one()->whereExpression($alias),
+                $this->other()->whereExpression($alias)
+            )
+        );
     }
 
     /**

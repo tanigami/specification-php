@@ -2,8 +2,6 @@
 
 namespace Tanigami\Specification;
 
-use Doctrine\Common\Collections\Criteria;
-
 class OneOfSpecification extends Specification
 {
     /**
@@ -22,24 +20,6 @@ class OneOfSpecification extends Specification
     /**
      * {@inheritdoc}
      */
-    public function criteria(): Criteria
-    {
-        /** @var Criteria $criteria */
-        $criteria = null;
-        foreach ($this->specifications as $specification) {
-            if (is_null($criteria)) {
-                $criteria = $specification->criteria();
-            } else {
-                $criteria = $criteria->orWhere($specification->criteria()->getWhereExpression());
-            }
-        }
-
-        return $criteria;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function isSatisfiedBy($object): bool
     {
         foreach ($this->specifications as $specification) {
@@ -49,6 +29,19 @@ class OneOfSpecification extends Specification
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function whereExpression(string $alias): string
+    {
+        return implode(' OR ', array_map(
+            function (Specification $specification) use ($alias) {
+                return '(' . $specification->whereExpression($alias) . ')';
+            },
+            $this->specifications
+        ));
     }
 
     /**

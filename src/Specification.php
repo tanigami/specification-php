@@ -3,7 +3,6 @@
 namespace Tanigami\Specification;
 
 use BadMethodCallException;
-use Doctrine\Common\Collections\Criteria;
 
 abstract class Specification
 {
@@ -14,11 +13,12 @@ abstract class Specification
     abstract public function isSatisfiedBy($object): bool;
 
     /**
-     * @return Criteria
+     * @param string $alias
+     * @return string
      */
-    public function criteria()
+    public function whereExpression(string $alias): string
     {
-        throw new BadMethodCallException('Criteria is not supported.');
+        throw new BadMethodCallException('Where expression is not supported');
     }
 
     /**

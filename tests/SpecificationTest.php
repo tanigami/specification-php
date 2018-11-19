@@ -85,20 +85,18 @@ class SpecificationTest extends TestCase
                 new OneOfSpecification($trueSpec, $falseSpec, $trueSpec),
                 $trueSpec
             );
-        $visitor = new Visitor();
-        $compositeSpec->criteria()->getWhereExpression()->visit($visitor);
         $this->assertSame(
-            '((((((bool = 1) AND (bool = 0)) OR (bool = 1)) AND (bool = 0)) AND (((bool = 1) OR (bool = 0)) OR (bool = 1))) AND (bool = 1))',
-            $visitor->trace()
+            '((((1) AND (0)) OR (1)) AND (0)) AND ((1) OR (0) OR (1)) AND (1)',
+            $compositeSpec->whereExpression('a')
         );
     }
 
     /**
      * @expectedException \BadMethodCallException
      */
-    public function testCriteriaIsNotSupported()
+    public function testWhereExpressionIsNotSupported()
     {
-        (new BoolSpecification(true))->not()->criteria();
+        (new BoolSpecification(true))->not()->whereExpression('a');
     }
 }
 
@@ -116,44 +114,8 @@ class BoolSpecification extends Specification
         return $this->bool;
     }
 
-    public function criteria(): Criteria
+    public function whereExpression(string $alias): string
     {
-        return new Criteria(Criteria::expr()->eq('bool', $this->bool));
-    }
-}
-
-class Visitor extends ExpressionVisitor
-{
-    private $trace;
-
-    public function walkComparison(Comparison $comparison)
-    {
-        $this->trace .= '(';
-        $this->trace .= $comparison->getField();
-        $this->trace .= ' ' . $comparison->getOperator() . ' ';
-        $this->trace .= $this->walkValue($comparison->getValue());
-        $this->trace .= ')';
-    }
-
-    public function walkCompositeExpression(CompositeExpression $expr)
-    {
-        $this->trace .= '(';
-        foreach ($expr->getExpressionList() as $i => $child) {
-            if ($i !== 0) {
-                $this->trace .= (' ' . $expr->getType() . ' ');
-            }
-            $expressionList[] = $this->dispatch($child);
-        }
-        $this->trace .= ')';
-    }
-
-    public function walkValue(Value $value)
-    {
-        return $value->getValue() ? '1' : '0';
-    }
-
-    public function trace()
-    {
-        return $this->trace;
+        return $this->bool ? '1' : '0';
     }
 }
