@@ -18,7 +18,7 @@ $ composer require tanigami/specification
 
 ```php
 <?php
-
+require 'vendor/autoload.php';
 use Tanigami\Specification\Specification;
 use Tanigami\Specification\OneOfSpecification;
 
