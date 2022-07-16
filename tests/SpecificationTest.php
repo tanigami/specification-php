@@ -2,12 +2,6 @@
 
 namespace Tanigami\Specification;
 
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
-use Doctrine\Common\Collections\Expr\Comparison;
-use Doctrine\Common\Collections\Expr\CompositeExpression;
-use Doctrine\Common\Collections\Expr\ExpressionVisitor;
-use Doctrine\Common\Collections\Expr\Value;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
