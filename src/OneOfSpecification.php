@@ -2,15 +2,19 @@
 
 namespace Tanigami\Specification;
 
+/**
+ * @template T
+ * @extends Specification<T>
+ */
 class OneOfSpecification extends Specification
 {
     /**
-     * @var Specification[]
+     * @var Specification<T>[]
      */
     private $specifications;
 
     /**
-     * @param Specification[] ...$specifications
+     * @param Specification<T> ...$specifications
      */
     public function __construct(Specification ...$specifications)
     {
@@ -18,7 +22,7 @@ class OneOfSpecification extends Specification
     }
 
     /**
-     * {@inheritdoc}
+     * @param T $object
      */
     public function isSatisfiedBy($object): bool
     {
@@ -31,13 +35,10 @@ class OneOfSpecification extends Specification
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function whereExpression(string $alias): string
     {
         return implode(' OR ', array_map(
-            function (Specification $specification) use ($alias) {
+            static function (Specification $specification) use ($alias) {
                 return '(' . $specification->whereExpression($alias) . ')';
             },
             $this->specifications
@@ -45,7 +46,7 @@ class OneOfSpecification extends Specification
     }
 
     /**
-     * @return Specification[]
+     * @return Specification<T>[]
      */
     public function specifications(): array
     {

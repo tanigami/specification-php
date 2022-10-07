@@ -2,15 +2,19 @@
 
 namespace Tanigami\Specification;
 
+/**
+ * @template T
+ * @extends Specification<T>
+ */
 class NotSpecification extends Specification
 {
     /**
-     * @var Specification
+     * @var Specification<T>
      */
     private $specification;
 
     /**
-     * @param Specification $specification
+     * @param Specification<T> $specification
      */
     public function __construct(Specification $specification)
     {
@@ -18,8 +22,7 @@ class NotSpecification extends Specification
     }
 
     /**
-     * @param mixed $object
-     * @return bool
+     * @param T $object
      */
     public function isSatisfiedBy($object): bool
     {
@@ -27,7 +30,7 @@ class NotSpecification extends Specification
     }
 
     /**
-     * @return Specification
+     * @return Specification<T>
      */
     public function specification(): Specification
     {

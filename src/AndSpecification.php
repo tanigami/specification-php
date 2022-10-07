@@ -2,21 +2,25 @@
 
 namespace Tanigami\Specification;
 
+/**
+ * @template T
+ * @extends Specification<T>
+ */
 class AndSpecification extends Specification
 {
     /**
-     * @var Specification
+     * @var Specification<T>
      */
     private $one;
 
     /**
-     * @var Specification
+     * @var Specification<T>
      */
     private $other;
 
     /**
-     * @param Specification $one
-     * @param Specification $other
+     * @param Specification<T> $one
+     * @param Specification<T> $other
      */
     public function __construct(Specification $one, Specification $other)
     {
@@ -25,29 +29,24 @@ class AndSpecification extends Specification
     }
 
     /**
-     * {@inheritdoc}
+     * @param T $object
      */
     public function isSatisfiedBy($object): bool
     {
         return $this->one->isSatisfiedBy($object) && $this->other->isSatisfiedBy($object);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function whereExpression(string $alias): string
     {
         return sprintf(
-            sprintf(
-                '(%s) AND (%s)',
-                $this->one()->whereExpression($alias),
-                $this->other()->whereExpression($alias)
-            )
+            '(%s) AND (%s)',
+            $this->one()->whereExpression($alias),
+            $this->other()->whereExpression($alias)
         );
     }
 
     /**
-     * @return Specification
+     * @return Specification<T>
      */
     public function one(): Specification
     {
@@ -55,7 +54,7 @@ class AndSpecification extends Specification
     }
 
     /**
-     * @return Specification
+     * @return Specification<T>
      */
     public function other(): Specification
     {
