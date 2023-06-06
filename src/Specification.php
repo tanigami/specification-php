@@ -4,26 +4,24 @@ namespace Tanigami\Specification;
 
 use BadMethodCallException;
 
+/**
+ * @template T
+ */
 abstract class Specification
 {
     /**
-     * @param mixed $object
-     * @return bool
+     * @param T $object
      */
     abstract public function isSatisfiedBy($object): bool;
 
-    /**
-     * @param string $alias
-     * @return string
-     */
     public function whereExpression(string $alias): string
     {
         throw new BadMethodCallException('Where expression is not supported');
     }
 
     /**
-     * @param Specification $specification
-     * @return AndSpecification
+     * @param Specification<T> $specification
+     * @return AndSpecification<T>
      */
     public function and(Specification $specification): AndSpecification
     {
@@ -31,8 +29,8 @@ abstract class Specification
     }
 
     /**
-     * @param Specification $specification
-     * @return OrSpecification
+     * @param Specification<T> $specification
+     * @return OrSpecification<T>
      */
     public function or(Specification $specification): OrSpecification
     {
@@ -40,7 +38,7 @@ abstract class Specification
     }
 
     /**
-     * @return NotSpecification
+     * @return NotSpecification<T>
      */
     public function not(): NotSpecification
     {

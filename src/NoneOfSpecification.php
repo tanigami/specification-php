@@ -2,15 +2,19 @@
 
 namespace Tanigami\Specification;
 
+/**
+ * @template T
+ * @extends Specification<T>
+ */
 class NoneOfSpecification extends Specification
 {
     /**
-     * @var Specification[]
+     * @var Specification<T>[]
      */
     private $specifications;
 
     /**
-     * @param Specification[] ...$specifications
+     * @param Specification<T> ...$specifications
      */
     public function __construct(Specification ...$specifications)
     {
@@ -18,7 +22,7 @@ class NoneOfSpecification extends Specification
     }
 
     /**
-     * {@inheritdoc}
+     * @param T $object
      */
     public function isSatisfiedBy($object): bool
     {
@@ -32,10 +36,10 @@ class NoneOfSpecification extends Specification
     }
 
     /**
-     * @return Specification[]
+     * @return Specification<T>[]
      */
     public function specifications(): array
     {
-        return $this->specifications();
+        return $this->specifications;
     }
 }
